@@ -3,6 +3,9 @@
 #include "ARCamera.h"
 #include "ARManager.h"
 
+#include "spine/SkeletonAnimation.h"
+#include "3d/CCBillBoard.h"
+
 USING_NS_CC;
 
 Scene* HelloWorld::createScene()
@@ -26,6 +29,7 @@ bool HelloWorld::init()
     camera->lookAt(Vec3::UNIT_Y * 100.f);
     
     // setup 3D objects
+#if 0
     auto human = Sprite3D::create("girl.c3b");
     human->setCameraMask(static_cast<int>(CameraFlag::USER1));
     this->addChild(human);
@@ -36,12 +40,22 @@ bool HelloWorld::init()
         auto animate = Animate3D::create(animation);
         human->runAction(RepeatForever::create(animate));
     }
-    
+#else
+    auto human = Node::create();
+    human->setCameraMask(static_cast<int>(CameraFlag::USER1));
+    this->addChild(human);
+    this->human = human;
+#endif
     auto floor = Sprite::create("HelloWorld.png");
     floor->setRotation3D({ -90.f, 0.f, 0.f });
     floor->setCameraMask(static_cast<int>(CameraFlag::USER1));
     human->addChild(floor);
-    
+
+    auto skeletonNode = spine::SkeletonAnimation::createWithJsonFile("spine/spineboy-ess.json", "spine/spineboy.atlas", 0.3);
+    skeletonNode->setAnimation(0, "walk", true);
+    skeletonNode->setCameraMask(static_cast<int>(CameraFlag::USER1));
+    human->addChild(skeletonNode);
+
     // setup touch event
     auto t = EventListenerTouchOneByOne::create();
     t->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);

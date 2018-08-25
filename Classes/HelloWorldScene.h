@@ -10,7 +10,7 @@ public:
     CREATE_FUNC(HelloWorld);
 
 private:
-    cocos2d::Sprite3D* human { nullptr };
+    cocos2d::Node* human { nullptr };
     
 public:
     virtual bool init();
