@@ -6,6 +6,7 @@
 #import <ARKit/ARKit.h>
 #import "arkit_sample_mobile-Swift.h"
 #import "platform/ios/CCEAGLView-ios.h"
+#import "ARViewController.h"
 
 USING_NS_CC;
 
@@ -84,7 +85,7 @@ void ARHelper::hitTest(const Vec2& worldPosition)
         pos.x /= Director::getInstance()->getWinSize().width;
         pos.y /= Director::getInstance()->getWinSize().height;
         
-        [ar hitTestWithGlNormalizedPoint: pos];
+        [ar hitTestWithGlNormalizedPoint:pos];
     }
 }
 
